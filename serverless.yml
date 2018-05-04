@@ -1,0 +1,37 @@
+service:
+  name: profile-chat-api
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-plugin-warmup
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: ap-northeast-2
+  state: dev
+  memorySize: 128
+  timeout: 10
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: '*'
+
+functions:
+  index:
+    warmup: true
+    handler: src/IndexHandler.default
+    events:
+      - http:
+          method: get
+          path: /
+
+custom:
+  warmup:
+    schedule: rate(5 minutes)
+    cleanFolder: false
+    memorySize: 128
+    timeout: 10
+    prewarm: true

@@ -1,10 +1,36 @@
 import Express from 'express';
+import cors from'cors';
 import BodyParser from 'body-parser';
 import InitModels from './models/__init__';
 import InitServices from './services/__init__';
 import InitRoutes from './routes/__init__';
 
 const App = Express();
+
+// Set CORS
+const originList = [
+    'http://localhost:3000',
+    'https://anpaul0615.github.io',
+    'https://anpaul0615.github.io/profile-chat-pwa'
+];
+App.use(cors({
+    origin: (origin, callback)=>{
+        if (originList.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: [ 'GET', 'PUT', 'POST', 'DELETE' ],
+    exposedHeaders: [
+        'Accept',
+        'Authorization',
+        'Content-Type',
+        'If-None-Match'
+    ],
+    credentials: true
+}));
+
 
 // Set Middleware
 App.use(BodyParser.urlencoded({

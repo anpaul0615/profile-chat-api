@@ -2,19 +2,19 @@
   "name": "profile-chat-api",
   "version": "1.0.0",
   "scripts": {
-    "start": "serverless offline start",
+    "start": "set SLS_DEBUG=*&& babel-node test.js",
     "deploy": "serverless deploy --stage dev --verbose",
     "deploy:prod": "serverless deploy --stage prod --verbose",
     "remove": "serverless remove --verbose"
   },
   "devDependencies": {
     "aws-sdk": "^2.267.1",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.7.0",
-    "serverless-offline": "^3.25.5",
     "serverless-plugin-warmup": "^3.6.1-rc.1",
     "serverless-webpack": "^3.1.1",
     "webpack": "^3.12.0"

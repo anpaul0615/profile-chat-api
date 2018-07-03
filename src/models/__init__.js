@@ -51,11 +51,7 @@ export default async function() {
         });
     }
     
-    /* Load Models */
-    const docClient = new AWS.DynamoDB.DocumentClient();
-    const User = require('./User')(docClient);
-    
-    /* Init Tables */
+    /* Load Models & Init Tables */
     function CreateTableIfNotExist(model){
         return DescribeTable(model)
         .catch(err=>{
@@ -63,11 +59,23 @@ export default async function() {
             return CreateTable(model);
         })
         .then(result=>{
-            console.log('CreateTableIfNotExist() :: ', result);
+            console.log('[models.__init__] CreateTableIfNotExist() :: ', result);
             return model;
         });
     }
+    const docClient = new AWS.DynamoDB.DocumentClient();
+    const Models = {};
+    try {
+        Models.User = await CreateTableIfNotExist(
+            require('./User')(docClient)
+        );
+
+    } catch(e) {
+        console.log('[models.__init__] Load Models & Init Tables Fail..!', e);
+    }
+    
 
     /* Return Models */
-    return { User: await CreateTableIfNotExist(User) };
+    console.log('[models.__init__] Init Model OK!!');
+    return Models;
 }

@@ -77,6 +77,6 @@ module.exports = function(docClient) {
     /* Custom Method */
     // todo
 
-    console.log('[models.User] init ok!!');
+    console.log('[models.User] Init ok!!');
     return new User();
 };

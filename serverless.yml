@@ -4,6 +4,7 @@ service:
 plugins:
   - serverless-webpack
   - serverless-plugin-warmup
+  - serverless-domain-manager
 
 provider:
   name: aws
@@ -37,3 +38,8 @@ custom:
     memorySize: 128
     timeout: 10
     prewarm: true
+  customDomain:
+    domainName: profile-chat-api.anpaul0615.com
+    stage: ${self:provider.stage}
+    certificateName: '*.anpaul0615.com'
+    createRoute53Record: true

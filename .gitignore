@@ -7,3 +7,9 @@ jspm_packages
 
 # Webpack directories
 .webpack
+
+# Backup files
+**.bak
+
+# Warmup Plugin
+_warmup

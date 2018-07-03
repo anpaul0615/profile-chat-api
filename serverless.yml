@@ -20,13 +20,16 @@ provider:
       Resource: '*'
 
 functions:
-  index:
+  RootHandler:
     warmup: true
-    handler: src/IndexHandler.default
+    handler: src/RootHandler.default
     events:
       - http:
-          method: get
           path: /
+          method: ANY
+      - http:
+          path: /{any+}
+          method: ANY
 
 custom:
   warmup:

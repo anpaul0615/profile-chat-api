@@ -8,18 +8,22 @@
     "remove": "serverless remove --verbose"
   },
   "devDependencies": {
-    "aws-sdk": "^2.232.1",
+    "aws-sdk": "^2.267.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
-    "serverless-offline": "^3.20.3",
+    "babel-preset-env": "^1.7.0",
+    "serverless-offline": "^3.25.5",
     "serverless-plugin-warmup": "^3.6.1-rc.1",
     "serverless-webpack": "^3.1.1",
-    "webpack": "^3.3.0"
+    "webpack": "^3.12.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "aws-serverless-express": "^3.2.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  },
   "babel": {
     "presets": [
       "env"

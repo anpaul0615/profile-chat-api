@@ -75,7 +75,32 @@ module.exports = function(docClient) {
     };
 
     /* Custom Method */
-    // todo
+    User.prototype.getUserByAccessCode = function(accessCode){
+        const params = {
+            TableName: this.Schema.TableName,
+            Key: {
+                "accessCode": accessCode
+            }
+        };
+
+        return new Promise((resolve,reject)=>{
+            docClient.get(params, (err,data)=>{
+                if (err) {
+                    reject({
+                        message: '[Fail] getUserByAccessCode() Fail..!',
+                        data,
+                        err
+                    });
+                } else {
+                    resolve({
+                        message: '[Done] getUserByAccessCode() OK!!',
+                        data,
+                        err
+                    });
+                }
+            });
+        });
+    };
 
     console.log('[models.User] Init ok!!');
     return new User();

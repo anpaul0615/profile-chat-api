@@ -3,6 +3,7 @@ import App from './App';
 
 const Server = awsServerlessExpress.createServer(App);
 
+console.log('[RootHandler] Init OK!!');
 export default (event, context)=>{
     /** Immediate response for WarmUP plugin */
     if (event.source === 'serverless-plugin-warmup') {
@@ -10,6 +11,5 @@ export default (event, context)=>{
         return callback(null, 'RootHandler is warm!!');
     }
     
-    console.log('[RootHandler] Init OK!!');
     return awsServerlessExpress.proxy(Server, event, context);
 }

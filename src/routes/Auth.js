@@ -30,7 +30,7 @@ export default function(models, services){
 
         try {
             // 1) recv access-code
-            const { accessCode } = req.query;
+            const accessCode = req.get('accessCode');
             if(!accessCode) {
                 return res.status(400).json({
                     message: 'HTTP GET /auth/users :: Missing access-code..!',

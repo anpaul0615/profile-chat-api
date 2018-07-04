@@ -4,7 +4,7 @@ import App from './App';
 const Server = awsServerlessExpress.createServer(App);
 
 console.log('[RootHandler] Init OK!!');
-export default (event, context)=>{
+export default (event, context, callback)=>{
     /** Immediate response for WarmUP plugin */
     if (event.source === 'serverless-plugin-warmup') {
         console.log('[RootHandler] warmup ok!!');

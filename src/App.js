@@ -11,7 +11,8 @@ const App = Express();
 const originList = [
     'http://localhost:3000',
     'https://anpaul0615.github.io',
-    'https://anpaul0615.github.io/profile-chat-pwa'
+    'https://anpaul0615.github.io/profile-chat-pwa',
+    'https://profile-chat-pwa.anpaul0615.com'
 ];
 App.use(cors({
     origin: (origin, callback)=>{

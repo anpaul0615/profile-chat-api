@@ -71,7 +71,7 @@ App.use(function(err, req, res, next) {
     console.log(['[500] => ', req.protocol, req.method, req.originalUrl].join(' '));
     console.log('============================');
     console.log(err.stack);
-    res.status(500).json({ message: err.message || '[500] Internel Server Error..!' });
+    res.status(500);
 });
 // 404 handler
 App.use(function(req, res, next) {

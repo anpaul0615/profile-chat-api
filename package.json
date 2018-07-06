@@ -2,6 +2,7 @@
   "name": "profile-chat-api",
   "version": "1.0.0",
   "scripts": {
+    "test": "jest --watch",
     "start": "set SLS_DEBUG=*&& babel-node test.js",
     "predeploy": "serverless create_domain",
     "deploy": "serverless deploy --stage dev --verbose",
@@ -12,10 +13,12 @@
     "aws-sdk": "^2.267.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
+    "babel-jest": "^23.2.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.7.0",
+    "jest": "^23.3.0",
     "serverless-domain-manager": "^2.4.0",
     "serverless-plugin-warmup": "^3.6.1-rc.1",
     "serverless-webpack": "^3.1.1",
@@ -25,7 +28,8 @@
     "aws-serverless-express": "^3.2.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0"
   },
   "babel": {
     "presets": [
@@ -35,5 +39,11 @@
       "transform-runtime"
     ],
     "minified": true
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/test.js"
+    ]
   }
 }

@@ -101,6 +101,35 @@ module.exports = function(docClient) {
             });
         });
     };
+    User.prototype.addUser = function(userInfo){
+        const { userAccessCode, userName, userContact } = userInfo;
+        const params = {
+            TableName: this.Schema.TableName,
+            Item: {
+                "accessCode": userAccessCode,
+                "name": userName,
+                "contact": userContact
+            }
+        };
+        return new Promise((resolve,reject)=>{
+            docClient.put(params, (err,data)=>{
+                if (err) {
+                    reject({
+                        message: '[Fail] addUser() Fail..!',
+                        data,
+                        err
+                    });
+                } else {
+                    resolve({
+                        message: '[Done] addUser() OK!!',
+                        data,
+                        err
+                    });
+                }
+            });
+        });
+    }
+
 
     console.log('[models.User] Init ok!!');
     return new User();

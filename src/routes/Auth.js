@@ -64,7 +64,47 @@ export default function(models, services){
             return next( new Error(e) );
         }
     });
-    
+    /**
+     * HTTP POST ~/auth/users
+     */
+    Router.post('/users', async (req,res,next)=>{
+        const { JWTManager, MailSender } = services;
+        const { User } = await models;
+
+        // 1) recv user-name, user-contact
+        const { userName, userContact } = req.body;
+
+        try {
+            // 2) create jwt-token by user-name, user-contact
+            const userAccessCode = await JWTManager.create({ userName, userContact });
+
+            // 3) find userInfo by jwtToken
+            const { data } = await User.getUserByAccessCode(userAccessCode);
+
+            // 3-1) if exist, response 400 (already registered)
+            if(data.Item) {
+                return res.status(400).json({
+                    message: 'HTTP POST /auth/users :: Already registered..!',
+                    data: {
+                        userAccessCode, userName, userContact
+                    }
+                });
+
+            // 3-2) else, add new-user + send email + response 201 (created)
+            } else {
+                await User.addUser({ userAccessCode, userName, userContact });
+                await MailSender.send({ userAccessCode, userName, userContact });
+                return res.status(201).json({
+                    message: 'HTTP GET /auth/users :: Created!!',
+                    data: null
+                });
+            }
+
+        } catch(e) {
+            return next( new Error(e) );
+        }
+    });
+
 
     console.log('[routes.Auth] Init OK!!');
     return Router;

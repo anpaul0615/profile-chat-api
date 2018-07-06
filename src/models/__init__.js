@@ -1,4 +1,4 @@
-import CONFIG from '../../conf/aws.credentials.json';
+import CONFIG from '../../conf/aws.conf.json';
 import AWS from 'aws-sdk';
 
 export default async function() {
@@ -7,8 +7,8 @@ export default async function() {
     AWS.config.update({
         accessKeyId: CONFIG.accessKeyId,
         secretAccessKey: CONFIG.secretAccessKey,
-        region: CONFIG.region,
-        endpoint: CONFIG.endpoint,
+        region: CONFIG.dynamodb.region,
+        endpoint: CONFIG.dynamodb.endpoint,
     });
     
     /* Table Init Functions */

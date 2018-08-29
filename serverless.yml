@@ -5,6 +5,7 @@ plugins:
   - serverless-webpack
   - serverless-plugin-warmup
   - serverless-domain-manager
+  - serverless-offline
 
 provider:
   name: aws
@@ -14,22 +15,33 @@ provider:
   memorySize: 128
   timeout: 10
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: Allow
       Action:
         - 'lambda:InvokeFunction'
       Resource: '*'
+    - Effect: Allow
+      Action:
+        - 'dynamodb:*'
+      Resource: '*'
 
 functions:
-  RootHandler:
-    warmup: true
-    handler: src/RootHandler.default
+  App:
+    handler: src/handlers/app.handler
     events:
       - http:
           path: /
-          method: ANY
+          method: GET
+          cors: true
+          authorizer: aws_iam
+  GetUserState:
+    warmup: true
+    handler: src/handlers/user-state/get.handler
+    events:
       - http:
-          path: /{any+}
-          method: ANY
+          path: /users/state
+          method: GET
+          cors: true
+          authorizer: aws_iam
 
 custom:
   warmup:

@@ -1,0 +1,4 @@
+{
+    "region": "ap-northeast-2",
+    "endpoint": "dynamodb.ap-northeast-2.amazonaws.com"
+}

@@ -42,6 +42,15 @@ functions:
           method: GET
           cors: true
           authorizer: aws_iam
+  UpdateUserState:
+    warmup: true
+    handler: src/handlers/user-state/update.handler
+    events:
+      - http:
+          path: /users/state
+          method: PUT
+          cors: true
+          authorizer: aws_iam
 
 custom:
   warmup:

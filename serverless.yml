@@ -60,6 +60,15 @@ functions:
           method: GET
           cors: true
           authorizer: aws_iam
+  AppendNewMessage:
+    warmup: true
+    handler: src/handlers/message/append.handler
+    events:
+      - http:
+          path: /messages
+          method: POST
+          cors: true
+          authorizer: aws_iam
 
 custom:
   warmup:

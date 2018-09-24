@@ -51,6 +51,15 @@ functions:
           method: PUT
           cors: true
           authorizer: aws_iam
+  GetMessageHistory:
+    warmup: true
+    handler: src/handlers/message/get.handler
+    events:
+      - http:
+          path: /messages
+          method: GET
+          cors: true
+          authorizer: aws_iam
 
 custom:
   warmup:

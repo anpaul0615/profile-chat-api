@@ -69,6 +69,15 @@ functions:
           method: POST
           cors: true
           authorizer: aws_iam
+  GetMessageGroup:
+    warmup: true
+    handler: src/handlers/message-group/get.handler
+    events:
+      - http:
+          path: /messages/group
+          method: GET
+          cors: true
+          authorizer: aws_iam
 
 custom:
   warmup:

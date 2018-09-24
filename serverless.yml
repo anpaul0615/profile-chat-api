@@ -87,6 +87,15 @@ functions:
           method: POST
           cors: true
           authorizer: aws_iam
+  DeleteMessageGroup:
+    warmup: true
+    handler: src/handlers/message-group/delete.handler
+    events:
+      - http:
+          path: /messages/group
+          method: DELETE
+          cors: true
+          authorizer: aws_iam
 
 custom:
   warmup:

@@ -78,6 +78,15 @@ functions:
           method: GET
           cors: true
           authorizer: aws_iam
+  SearchMessageGroup:
+    warmup: true
+    handler: src/handlers/message-group/search.handler
+    events:
+      - http:
+          path: /messages/group/search
+          method: GET
+          cors: true
+          authorizer: aws_iam
   CreateNewMessageGroup:
     warmup: true
     handler: src/handlers/message-group/create.handler

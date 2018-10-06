@@ -29,11 +29,16 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Invalid body data..! ' }));
     }
-    const { username, isConnected } = bodyData;
-    if (!username) {
+    const { userId, userName, isConnected } = bodyData;
+    if (!userId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing username..! ' }));
+            message: 'Missing userId..! ' }));
+    }
+    if (!userName) {
+        return callback(null, response.badRequest({
+            status: false,
+            message: 'Missing userName..! ' }));
     }
     if (isConnected === undefined) {
         return callback(null, response.badRequest({
@@ -51,7 +56,8 @@ export const handler = async (event, context, callback)=>{
         const putParams = {
             TableName: 'profile-chat.UserStates',
             Item: {
-                "username": username,
+                "userId": userId,
+                'userName': userName,
                 "isConnected": isConnected
             },
             ReturnValues: "ALL_OLD"
@@ -62,7 +68,7 @@ export const handler = async (event, context, callback)=>{
         const getParams = {
             TableName: 'profile-chat.UserStates',
             Key: {
-                'username': username
+                'userId': userId
             }
         };
         const getResult = await dynamodb.call('get', getParams);

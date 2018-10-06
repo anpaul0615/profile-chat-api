@@ -22,11 +22,11 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Missing querystring..! ' }));
     }
-    const { groupname } = queryStringData;
-    if (!groupname) {
+    const { groupId } = queryStringData;
+    if (!groupId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing groupname..! ' }));
+            message: 'Missing groupId..! ' }));
     }
 
     // Get Message Group
@@ -34,7 +34,7 @@ export const handler = async (event, context, callback)=>{
         const params = {
             TableName: 'profile-chat.MessageGroups',
             Key: {
-                'groupname': groupname
+                'groupId': groupId
             }
         };
         const result = await dynamodb.call('get', params);

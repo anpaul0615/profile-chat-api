@@ -29,31 +29,31 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Invalid body data..! ' }));
     }
-    const { groupname, regdate, content, username } = bodyData;
-    if (!groupname) {
+    const { groupId, regDate, content, userName } = bodyData;
+    if (!groupId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing groupname..! ' }));
+            message: 'Missing groupId..! ' }));
     }
-    if (!username) {
+    if (!regDate) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing username..! ' }));
+            message: 'Missing regDate..! ' }));
+    }
+    if (!Date.parse(regDate)){
+        return callback(null, response.badRequest({
+            status: false,
+            message: 'Invalid regDate..! ' }));
     }
     if (!content) {
         return callback(null, response.badRequest({
             status: false,
             message: 'Missing content..! ' }));
     }
-    if (!regdate) {
+    if (!userName) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing regdate..! ' }));
-    }
-    if (!Date.parse(regdate)){
-        return callback(null, response.badRequest({
-            status: false,
-            message: 'Invalid regdate..! ' }));
+            message: 'Missing userName..! ' }));
     }
 
     // Append New Message
@@ -61,10 +61,10 @@ export const handler = async (event, context, callback)=>{
         const putParams = {
             TableName: 'profile-chat.Messages',
             Item: {
-                "groupname": groupname,
-                "regdate": regdate,
+                "groupId": groupId,
+                "regDate": regDate,
                 "content": content,
-                "username": username
+                "userName": userName
             }
         };
         await dynamodb.call('put', putParams);

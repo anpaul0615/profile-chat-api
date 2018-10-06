@@ -22,11 +22,11 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Missing querystring..! ' }));
     }
-    const { username } = queryStringData;
-    if (!username) {
+    const { userName } = queryStringData;
+    if (!userName) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing username..! ' }));
+            message: 'Missing userName..! ' }));
     }
 
     // Search Message Group By Username
@@ -35,12 +35,12 @@ export const handler = async (event, context, callback)=>{
             TableName: 'profile-chat.MessageGroups',
             FilterExpression: 'contains(#ul, :u)',
             ExpressionAttributeNames: {
-                "#ul": "userList",
+                "#ul": "groupUsers",
             },
             ExpressionAttributeValues: {
-                ':u': username
+                ':u': userName
             },
-            ProjectionExpression: "groupname, groupnickname, lastMessage",
+            ProjectionExpression: "groupId, groupName, lastMessage",
         };
         const result = await dynamodb.call('scan', scanParams);
 

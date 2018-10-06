@@ -29,21 +29,26 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Invalid body data..! ' }));
     }
-    const { groupname, groupNickname, userList } = bodyData;
-    if (!groupname) {
+    const { groupId, groupName, groupUsers } = bodyData;
+    if (!groupId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing groupname..! ' }));
+            message: 'Missing groupId..! ' }));
     }
-    if (!userList) {
+    if (!groupName) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing userList..! ' }));
+            message: 'Missing groupName..! ' }));
     }
-    if (userList.length === 0) {
+    if (!groupUsers) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Empty userList..! ' }));
+            message: 'Missing groupUsers..! ' }));
+    }
+    if (groupUsers.length === 0) {
+        return callback(null, response.badRequest({
+            status: false,
+            message: 'Empty groupUsers..! ' }));
     }
 
     // Create New Message Group
@@ -51,9 +56,9 @@ export const handler = async (event, context, callback)=>{
         const putParams = {
             TableName: 'profile-chat.MessageGroups',
             Item: {
-                "groupname": groupname,
-                "groupnickname": groupNickname || groupname,
-                "userList": userList
+                "groupId": groupId,
+                "groupName": groupName,
+                "groupUsers": groupUsers
             }
         };
         await dynamodb.call('put', putParams);

@@ -22,11 +22,11 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Missing querystring..! ' }));
     }
-    const username = queryStringData.username;
-    if (!username) {
+    const userId = queryStringData.userName;
+    if (!userId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing username..! ' }));
+            message: 'Missing userId..! ' }));
     }
 
     // Get User Data
@@ -34,7 +34,7 @@ export const handler = async (event, context, callback)=>{
         const params = {
             TableName: 'profile-chat.UserStates',
             Key: {
-                'username': username
+                'userId': userId
             }
         };
         const result = await dynamodb.call('get', params);
@@ -42,7 +42,7 @@ export const handler = async (event, context, callback)=>{
         if (!result.Item) {
             return callback(null, response.notFound({
                 status: false,
-                message: `[${username}]'s user state is not found..!` }));
+                message: `[${userId}]'s user state is not found..!` }));
         }
 
         return callback(null, response.success({

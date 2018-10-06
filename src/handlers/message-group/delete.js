@@ -29,11 +29,11 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Invalid body data..! ' }));
     }
-    const { groupname } = bodyData;
-    if (!groupname) {
+    const { groupId } = bodyData;
+    if (!groupId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing groupname..! ' }));
+            message: 'Missing groupId..! ' }));
     }
 
     // Delete Message Group
@@ -41,7 +41,7 @@ export const handler = async (event, context, callback)=>{
         const deleteParams = {
             TableName: 'profile-chat.MessageGroups',
             Key:{
-                'groupname': groupname
+                'groupId': groupId
             }
         };
         await dynamodb.call('delete', deleteParams);

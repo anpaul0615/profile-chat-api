@@ -23,11 +23,11 @@ export const handler = async (event, context, callback)=>{
             status: false,
             message: 'Missing querystring..! ' }));
     }
-    const { groupname, startDate, endDate } = queryStringData;
-    if (!groupname) {
+    const { groupId, startDate, endDate } = queryStringData;
+    if (!groupId) {
         return callback(null, response.badRequest({
             status: false,
-            message: 'Missing groupname..! ' }));
+            message: 'Missing groupId..! ' }));
     }
     if (startDate && !Date.parse(startDate)){
         return callback(null, response.badRequest({
@@ -44,14 +44,14 @@ export const handler = async (event, context, callback)=>{
     try {
         const queryParams = {
             TableName: 'profile-chat.Messages',
-            KeyConditionExpression: 'groupname = :gn AND regdate BETWEEN :sd AND :ed',
+            KeyConditionExpression: 'groupId = :gi AND regDate BETWEEN :sd AND :ed',
             ExpressionAttributeValues: {
-                ':gn': groupname,
+                ':gi': groupId,
                 ":sd": startDate || isoDatetime.getDatetimeWithDayOffset(-1),
                 ":ed": endDate || isoDatetime.getNow()
             },
             Limit: 100,
-            ProjectionExpression: 'regdate, content, username'
+            ProjectionExpression: 'regDate, content, userName'
         };
         const result = await dynamodb.call('query', queryParams);
 

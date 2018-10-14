@@ -22,7 +22,7 @@ export const handler = async (event, context, callback)=>{
         return callback(null, response.badRequest({
             message: 'Missing querystring..! ' }));
     }
-    const { groupId, startDate, endDate } = queryStringData;
+    const { groupId, startDate, endDate, limit } = queryStringData;
     if (!groupId) {
         return callback(null, response.badRequest({
             message: 'Missing groupId..! ' }));
@@ -46,7 +46,8 @@ export const handler = async (event, context, callback)=>{
                 ":sd": startDate || isoDatetime.getDatetimeWithDayOffset(-1),
                 ":ed": endDate || isoDatetime.getNow()
             },
-            Limit: 100,
+            ScanIndexForward: false,
+            Limit: limit || 50,
             ProjectionExpression: 'regDate, content, userName'
         };
         const result = await dynamodb.call('query', queryParams);

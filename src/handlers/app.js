@@ -9,6 +9,5 @@ import * as response from '../helpers/response';
  */
 export const handler = (event, context, callback)=>{
     return callback(null, response.success({
-        status: true,
         message: 'profile-chat-api v1.0' }));
 };

@@ -20,39 +20,32 @@ export const handler = async (event, context, callback)=>{
     const bodyDataString = event.body;
     if (!bodyDataString) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing body data..! ' }));
     }
     const bodyData = bodyParser.toObject(bodyDataString);
     if (typeof(bodyData) !== 'object') {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Invalid body data..! ' }));
     }
     const { groupId, regDate, content, userName } = bodyData;
     if (!groupId) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing groupId..! ' }));
     }
     if (!regDate) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing regDate..! ' }));
     }
     if (!Date.parse(regDate)){
         return callback(null, response.badRequest({
-            status: false,
             message: 'Invalid regDate..! ' }));
     }
     if (!content) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing content..! ' }));
     }
     if (!userName) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing userName..! ' }));
     }
 
@@ -70,14 +63,12 @@ export const handler = async (event, context, callback)=>{
         await dynamodb.call('put', putParams);
 
         return callback(null, response.success({
-            status: true,
             message: `new message is appended!!`
             }));
 
     } catch (e) {
         console.log(e);
         return callback(null, response.failure({
-            status: false,
             message: 'Internal error..!' }));
     }
 };

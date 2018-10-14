@@ -19,13 +19,11 @@ export const handler = async (event, context, callback)=>{
     const queryStringData = event.queryStringParameters;
     if (!queryStringData) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing querystring..! ' }));
     }
     const { groupId } = queryStringData;
     if (!groupId) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing groupId..! ' }));
     }
 
@@ -41,19 +39,17 @@ export const handler = async (event, context, callback)=>{
 
         if (!result.Item) {
             return callback(null, response.notFound({
-                status: false,
-                message: `no message-group found..!` }));
+                message: `no message-group found..!`,
+                data: {} }));
         }
 
         return callback(null, response.success({
-            status: true,
             message: `message-group is found!!`,
             data: result.Item }));
 
     } catch (e) {
         console.log(e);
         return callback(null, response.failure({
-            status: false,
             message: 'Internal error..!' }));
     }
 };

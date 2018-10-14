@@ -20,34 +20,28 @@ export const handler = async (event, context, callback)=>{
     const bodyDataString = event.body;
     if (!bodyDataString) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing body data..! ' }));
     }
     const bodyData = bodyParser.toObject(bodyDataString);
     if (typeof(bodyData) !== 'object') {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Invalid body data..! ' }));
     }
     const { groupId, groupName, groupUsers } = bodyData;
     if (!groupId) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing groupId..! ' }));
     }
     if (!groupName) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing groupName..! ' }));
     }
     if (!groupUsers) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing groupUsers..! ' }));
     }
     if (groupUsers.length === 0) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Empty groupUsers..! ' }));
     }
 
@@ -64,14 +58,12 @@ export const handler = async (event, context, callback)=>{
         await dynamodb.call('put', putParams);
 
         return callback(null, response.success({
-            status: true,
             message: `new message-group is created!!`
             }));
 
     } catch (e) {
         console.log(e);
         return callback(null, response.failure({
-            status: false,
             message: 'Internal error..!' }));
     }
 };

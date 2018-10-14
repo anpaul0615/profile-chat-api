@@ -20,23 +20,19 @@ export const handler = async (event, context, callback)=>{
     const queryStringData = event.queryStringParameters;
     if (!queryStringData) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing querystring..! ' }));
     }
     const { groupId, startDate, endDate } = queryStringData;
     if (!groupId) {
         return callback(null, response.badRequest({
-            status: false,
             message: 'Missing groupId..! ' }));
     }
     if (startDate && !Date.parse(startDate)){
         return callback(null, response.badRequest({
-            status: false,
             message: 'Invalid startDate..! ' }));
     }
     if (endDate && !Date.parse(endDate)){
         return callback(null, response.badRequest({
-            status: false,
             message: 'Invalid endDate..! ' }));
     }
 
@@ -57,19 +53,17 @@ export const handler = async (event, context, callback)=>{
 
         if (result.Items.length === 0) {
             return callback(null, response.notFound({
-                status: false,
-                message: `no message found..!` }));
+                message: `no message found..!`,
+                data: [] }));
         }
 
         return callback(null, response.success({
-            status: true,
             message: `messages are found!!`,
             data: result.Items }));
 
     } catch (e) {
         console.log(e);
         return callback(null, response.failure({
-            status: false,
             message: 'Internal error..!' }));
     }
 };
